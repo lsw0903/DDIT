@@ -40,7 +40,7 @@ public class Hw7 {
 		
 		for(int i=0; i<5; i++) {
 			for(int j=0; j<5; j++) {
-				cnt += score[j][i];
+				cnt += score[i][j];
 			}
 		}
 		System.out.println("가로,세로 줄의 총합 : " + cnt);
