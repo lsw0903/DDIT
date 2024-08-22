@@ -1,4 +1,4 @@
-package day12.nestedClass;
+package day12.nestedClass1;
 
 public class Main {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package day12.nestedClass;
+package day12.nestedClass1;
 
 public class A {
 	//A constructor
