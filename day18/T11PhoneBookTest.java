@@ -14,7 +14,6 @@ import java.util.Set;
 	  전체의 전화번호 정보는 Map을 이용하여 관리한다.
 	  (key는 '이름'으로 하고 value는 'Phone클래스의 인스턴스'로 한다.)
 
-
 실행예시)
 ===============================================
    전화번호 관리 프로그램(파일로 저장되지 않음)
@@ -70,6 +69,7 @@ public class T11PhoneBookTest {
 	
 	public T11PhoneBookTest() {
 		scan = new Scanner(System.in);
+		phoneBookMap = new HashMap<String, Phone>();
 	}
 	
 	// 메뉴를 출력하는 메서드
@@ -118,8 +118,110 @@ public class T11PhoneBookTest {
 	}
 	
 	/*
-	 * 회원정보를 등록하기 위하 메서드
-	 * (이미 등록된 사람은 등록되지 않는다.)
+	 * 전화번호 정보를 검색하기 위한 메서드
+	 */
+	private void search() {
+		
+		System.out.println();
+		System.out.println("검색할 전화번호 정보를 입력하세요.");
+		System.out.print("이 름 >> ");
+		String name = scan.next();
+		
+		Phone p = phoneBookMap.get(name);
+		
+		if(p == null) {
+			System.out.println(name + "씨의 전화번호 정보가 없습니다.");
+		} else {
+			System.out.println("=== " +name + "씨의 전화번호 정보 ===");
+			System.out.println("이름 : " + p.getName());
+			System.out.println("전화 : " + p.getTel());
+			System.out.println("주소 : " + p.getAddr());
+		}
+		System.out.println("검색작업 완료...");
+	}
+
+	/*
+	 * 전화번호 정보를 삭제하기 위한 메서드
+	 */
+	private void delete() {
+		
+		System.out.println();
+		System.out.println("삭제할 전화번호 정보를 입력하세요.");
+		System.out.print("이 름 >> ");
+		String name = scan.next();
+		
+		//remove(key) => 삭제 성공하면 삭제된 value값을 반환하고,
+		//				 실패하면 null을 반환한다.
+		if(phoneBookMap.remove(name) == null) {
+			System.out.println(name + "씨는 등록된 사람이 아닙니다.");
+		} else {
+			System.out.println(name + "씨 정보를 삭제했습니다.");
+		}
+		System.out.println("삭제작업 완료...");
+	}
+
+	/*
+	 * 전화번호 정보를 수정하기 위한 메서드
+	 */
+	private void update() {
+		
+			System.out.println();
+			System.out.println("새롭게 수정할 전화번호 정보를 입력하세요.");
+			System.out.print("이 름 >> ");
+			String name = scan.next();
+			
+			//이미 등록된 사람인지 검사
+			//get()메서드를 이용하여 데이터를 가져올때, 없으면 null 반환함.
+			if(phoneBookMap.get(name) == null) {
+				System.out.println(name + "는 이미 등록된 사람이 아닙니다.");
+				return; //메서드 종료
+			}
+			
+			System.out.print("전화번호 >> ");
+			String tel = scan.next();
+			
+			scan.nextLine(); //입력버퍼에 남아있는 엔터키 제거용...
+			
+			System.out.print("주 소 >> ");
+			String addr = scan.nextLine();
+			
+			Phone p = new Phone(name, tel, addr);
+			
+			phoneBookMap.put(name, p);
+			
+			System.out.println(name + "씨 수정 완료...");
+		}
+
+	/*
+	   전화번호 정보 전체 출력하기 위한 메서드
+	 */
+	private void displayAll() {
+		System.out.println("==============================================");
+		System.out.println(" 번호\t이름\t전화번호\t주소");
+		System.out.println("==============================================");
+		
+		Set<String> keySet = phoneBookMap.keySet();
+		
+		if(keySet.size() == 0) {
+			System.out.println("등록된 전화번호 정보가 없습니다.");
+		} else {
+			Iterator<String> it = keySet.iterator();
+			int cnt = 1;
+			while(it.hasNext()) {
+				String name = it.next();
+				Phone p = phoneBookMap.get(name);
+				System.out.println(" " + cnt + "\t" + p.getName() + "\t"
+						+ p.getTel() + "\t" + p.getAddr());
+				cnt++;
+			}
+			System.out.println("----------------------------------------------");
+			System.out.println("출력 완료...");
+		}
+	}
+
+	/*
+	   회원정보를 등록하기 위한 메서드
+	   (이미 등록된 사람은 등록되지 않는다.)
 	 */
 	private void insert() {
 		System.out.println();
@@ -127,15 +229,34 @@ public class T11PhoneBookTest {
 		System.out.print("이 름 >> ");
 		String name = scan.next();
 		
+		//이미 등록된 사람인지 검사
+		//get()메서드를 이용하여 데이터를 가져올때, 없으면 null 반환함.
+		if(phoneBookMap.get(name) != null) {
+			System.out.println(name + "는 이미 등록된 사람입니다.");
+			return; //메서드 종료
+		}
+		
+		System.out.print("전화번호 >> ");
+		String tel = scan.next();
+		
+		//scan.nextLine(); //입력버퍼에 남아있는 엔터키 제거용...
+		
+		System.out.print("주 소 >> ");
+		String addr = scan.nextLine();
+		
+		Phone p = new Phone(name, tel, addr);
+		
+		phoneBookMap.put(name, p);
+		
+		System.out.println(name + "씨 등록 완료...");
 	}
 
 	public static void main(String[] args) {
 		new T11PhoneBookTest().phoneBookStart();
 	}
-
 }
 
-
+// VO(Value Object) 클래스
 class Phone {
 	
 	private String name;
@@ -166,17 +287,14 @@ class Phone {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	
 	@Override
 	public String toString() {
 		return "Phone [name=" + name + ", tel=" + tel + ", addr=" + addr + "]";
 	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(addr, name, tel);
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -188,5 +306,4 @@ class Phone {
 		Phone other = (Phone) obj;
 		return Objects.equals(addr, other.addr) && Objects.equals(name, other.name) && Objects.equals(tel, other.tel);
 	}
-	
 }
