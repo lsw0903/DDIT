@@ -28,6 +28,5 @@ public class T06FileStreamTest {
 				e.printStackTrace();
 			}
 		}
-		
 	}
 }
