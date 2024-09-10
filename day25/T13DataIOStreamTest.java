@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /*
- 	기본타입(Primative)데이터 입출력을 위한 보조스트림
+ 	기본타입(Primitive)데이터 입출력을 위한 보조스트림
 */
 public class T13DataIOStreamTest {
 	public static void main(String[] args) throws IOException {
