@@ -12,7 +12,7 @@ public class T07PropertiesTest {
 		
 		try {
 			
-			FileInputStream fis = new FileInputStream("day28_res/db.properties");
+			FileInputStream fis = new FileInputStream("src/db.properties");
 			
 			// properties 파일 읽기
 			prop.load(fis);
