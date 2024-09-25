@@ -2,6 +2,8 @@ package day33.ref;
 
 import java.io.Serializable;
 
+import day33.PrintAnnotation;
+
 public class SampleVO implements Serializable{
 	
 	public String id;
@@ -24,7 +26,8 @@ public class SampleVO implements Serializable{
 		return id;
 	}
 
-	public void setId(String id) {
+	@PrintAnnotation
+	public void setId(String id) throws Exception {
 		this.id = id;
 	}
 
