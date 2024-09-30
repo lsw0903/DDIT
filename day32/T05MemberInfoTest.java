@@ -10,7 +10,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import kr.or.ddit.util.JDBCUtil2;
+import day31.util.JDBCUtil2;
 
 /*
 	회원정보를 관리하는 프로그램을 작성하는데 
