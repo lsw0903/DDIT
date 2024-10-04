@@ -7,11 +7,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.StringTokenizer;
+
+import day39.http.MyHttpServer;
+import day39.http.MyHttpServer.HttpHandler;
 
 /*
  	간단한 웹서버 예제
@@ -74,7 +78,7 @@ public class MyHttpServer {
 					System.out.println(str);
 					
 					if(str.equals("")) {
-						br.close();
+						//br.close();
 						break;
 					}
 				}
@@ -116,7 +120,7 @@ public class MyHttpServer {
 				
 				File reqFile = new File(filePath); 
 				if(!reqFile.exists()) {
-					//makeErrorPage(bos, 404, "Not Found");
+					makeErrorPage(bos, 404, "Not Found");
 					return;
 				}
 				
@@ -188,6 +192,19 @@ public class MyHttpServer {
 		}
 		
 		return data;
+	}
+	
+	private void makeErrorPage(OutputStream out,
+			int statusCode, String errMsg) {
+		String statusLine = "HTTP/1.1" + " " + statusCode
+				+ " " + errMsg;
+		
+		try {
+			out.write(statusLine.getBytes());
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
